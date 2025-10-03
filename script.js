@@ -56,20 +56,36 @@ function renderList(list) {
 
     list.forEach(member => {
         const div = document.createElement("div");
-        const graduated = member.graduated === true ? "Graduated" : "Not Graduated";
-        let websiteHtml = `<a href="#" class="visit-err">Visit</a>`;
+        const id = member.id ?? "";
+        const title = member.title ?? "";
+        const bio = member.bio ?? "";
+        const graduated = member.graduated === true ? "Graduated" : "Undergraduate";
+        let websiteHtml = `<a href="#" class="visit-btn" id="visit-err">Visit</a>`;
         if (member.website && isValidHttpUrl(member.website)) {
             const safeHref = escapeHtml(member.website);
-            websiteHtml = `<a class="visit-link" href="${safeHref}" target="_blank" rel="noopener noreferrer">Visit</a>`;
+            websiteHtml = `<a  class="visit-btn"  id="visit-link" href="${safeHref}" target="_blank" rel="noopener noreferrer">Visit</a>`;
         }
         div.innerHTML = `
                                 <div class="member-card">
-                                <h1 class="id"> ${escapeHtml(member.id)}</h1>
-                                <h2 class="title"> ${escapeHtml(member.title)}</h2>
+                                 <div class="action-bar">
+                                <li>
+                                    <a class="edit-btn" href="edit.html?id=${encodeURIComponent(id)}">
+                                    <svg id="edit-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/>
+                                    </svg>
+                                    </a>
+                                    <a class="delete-btn" href="edit.html?id=${encodeURIComponent(id)}">
+                                    <svg id="del-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                    </svg>
+                                    </a>
+                                </li>
+                                </div>
+                                <h1 class="id"> ${escapeHtml(id)}</h1>
+                                <h2 class="title"> ${escapeHtml(title)}</h2>
                                 <p class="graduated"> (${graduated})</p>
-                                <div class = "bio-wrapper"><p class="bio"> ${escapeHtml(member.bio)}</p></div>
-                                <p class="website">${websiteHtml}</p>
-
+                                <div class = "bio-wrapper"><p class="bio"> ${escapeHtml(bio)}</p></div>
+                                <p class="website">
+                                ${websiteHtml}
+                                </p>
                                 </div>
                                 `
         memberList.appendChild(div)
@@ -78,7 +94,7 @@ function renderList(list) {
 }
 
 memberList.addEventListener("click", (e) => {
-    const a = e.target.closest('a.visit-err');
+    const a = e.target.closest('a#visit-err');
     if (a) {
         e.preventDefault();
         alert("The website is under construction");
@@ -99,3 +115,6 @@ function searchMember() {
 
 searchInput.addEventListener('input', searchMember);
 getMember();
+
+
+
