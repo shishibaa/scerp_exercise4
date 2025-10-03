@@ -12,10 +12,10 @@
                 const res = await fetch(`https://api.tsukijou.dev/members/${encodeURIComponent(memberId)}`);
                 if (!res.ok) throw new Error("Failed to fetch member");
                 const member = await res.json();
-                id.value = member.id ?? "";
-                title.value = member.title ?? "";
-                bio.value = member.bio ?? "";
-                website.value = member.website ?? "";
+                id.value = member.id ;
+                title.value = member.title;
+                bio.value = member.bio ;
+                website.value = member.website;
                 graduate.value = member.graduated ? "true" : "false";
             } catch (err) {
                 alert("Error: " + err.message);

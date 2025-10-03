@@ -56,9 +56,9 @@ function renderList(list) {
 
     list.forEach(member => {
         const div = document.createElement("div");
-        const id = member.id ?? "";
-        const title = member.title ?? "";
-        const bio = member.bio ?? "";
+        const id = member.id;
+        const title = member.title;
+        const bio = member.bio;
         const graduated = member.graduated === true ? "Graduated" : "Undergraduate";
         let websiteHtml = `<a href="#" class="visit-btn" id="visit-err">Visit</a>`;
         if (member.website && isValidHttpUrl(member.website)) {
@@ -87,7 +87,8 @@ function renderList(list) {
                                 ${websiteHtml}
                                 </p>
                                 </div>
-                                `
+
+                            `
         memberList.appendChild(div)
     });
 
